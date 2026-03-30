@@ -1,0 +1,18 @@
+services:
+  test-container-1:
+    build:
+      context: ./cdk-app/ecs_containers/test-container-1
+      dockerfile: dockerfile
+    environment:
+      PORT: "5000"
+    ports:
+      - "5000:5000"
+
+  test-container-2:
+    build:
+      context: ./cdk-app/ecs_containers/test-container-2
+      dockerfile: dockerfile
+    environment:
+      PORT: "5001"
+    ports:
+      - "5001:5001"
