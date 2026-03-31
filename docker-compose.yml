@@ -1,18 +1,46 @@
+x-common-env: &common-env
+  CHOKIDAR_USEPOLLING: "true"
+  CHOKIDAR_INTERVAL: "300"
+
 services:
+  local-api-dev-server:
+    build:
+      context: ./local-api-dev-server
+      dockerfile: dockerfile
+    environment:
+      <<: *common-env
+      NODE_ENV: development
+      PORT: "8080"
+      TEST_CONTAINER_1_URL: "http://test-container-1"
+      TEST_CONTAINER_2_URL: "http://test-container-2"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./local-api-dev-server:/app
+      - ./cdk-app:/cdk-app
+      - /app/node_modules
+    depends_on:
+      - test-container-1
+      - test-container-2
+
   test-container-1:
     build:
       context: ./cdk-app/ecs_containers/test-container-1
       dockerfile: dockerfile
     environment:
-      PORT: "5000"
-    ports:
-      - "5000:5000"
+      <<: *common-env
+      PORT: "80"
+    volumes:
+      - ./cdk-app/ecs_containers/test-container-1:/app
+      - /app/node_modules
 
   test-container-2:
     build:
       context: ./cdk-app/ecs_containers/test-container-2
       dockerfile: dockerfile
     environment:
-      PORT: "5001"
-    ports:
-      - "5001:5001"
+      <<: *common-env
+      PORT: "80"
+    volumes:
+      - ./cdk-app/ecs_containers/test-container-2:/app
+      - /app/node_modules

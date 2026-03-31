@@ -7,8 +7,8 @@ import { IFunction } from "aws-cdk-lib/aws-lambda";
 export interface ApiStackProps extends cdk.StackProps {
   testFunction1: IFunction;
   testFunction2: IFunction;
-  testContainer1Url: string;
-  testContainer2Url: string;
+  // testContainer1Url: string;
+  // testContainer2Url: string;
 }
 
 export class ApiStack extends cdk.Stack {
@@ -38,23 +38,23 @@ export class ApiStack extends cdk.Stack {
       ),
     });
 
-    api.addRoutes({
-      path: "/test-container-1",
-      methods: [apigwv2.HttpMethod.ANY],
-      integration: new integrations.HttpUrlIntegration(
-        "TestContainer1Integration",
-        props.testContainer1Url,
-      ),
-    });
+    // api.addRoutes({
+    //   path: "/test-container-1",
+    //   methods: [apigwv2.HttpMethod.ANY],
+    //   integration: new integrations.HttpUrlIntegration(
+    //     "TestContainer1Integration",
+    //     props.testContainer1Url,
+    //   ),
+    // });
 
-    api.addRoutes({
-      path: "/test-container-2",
-      methods: [apigwv2.HttpMethod.ANY],
-      integration: new integrations.HttpUrlIntegration(
-        "TestContainer2Integration",
-        props.testContainer2Url,
-      ),
-    });
+    // api.addRoutes({
+    //   path: "/test-container-2",
+    //   methods: [apigwv2.HttpMethod.ANY],
+    //   integration: new integrations.HttpUrlIntegration(
+    //     "TestContainer2Integration",
+    //     props.testContainer2Url,
+    //   ),
+    // });
 
     new cdk.CfnOutput(this, "HttpApiUrl", {
       value: api.apiEndpoint,

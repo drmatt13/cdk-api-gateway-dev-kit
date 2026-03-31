@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import * as cdk from "aws-cdk-lib";
 import { LambdaHandlersStack } from "../lib/lambda-handlers-stack";
-import { EcsStack } from "../lib/ecs-stack";
+// import { EcsStack } from "../lib/ecs-stack";
 import { ApiStack } from "../lib/api-stack";
 
 const app = new cdk.App();
@@ -25,18 +25,18 @@ const handlersStack = new LambdaHandlersStack(app, "LambdaHandlersStack", {
   env: stackEnv,
 });
 
-const ecsStack = new EcsStack(app, "EcsStack", {
-  env: stackEnv,
-});
+// const ecsStack = new EcsStack(app, "EcsStack", {
+//   env: stackEnv,
+// });
 
 // Create API stack with the handler functions
 const apiStack = new ApiStack(app, "ApiStack", {
   env: stackEnv,
   testFunction1: handlersStack.testFunction1,
   testFunction2: handlersStack.testFunction2,
-  testContainer1Url: ecsStack.testContainer1Url,
-  testContainer2Url: ecsStack.testContainer2Url,
+  // testContainer1Url: ecsStack.testContainer1Url,
+  // testContainer2Url: ecsStack.testContainer2Url,
 });
 
 apiStack.addDependency(handlersStack);
-apiStack.addDependency(ecsStack);
+// apiStack.addDependency(ecsStack);
