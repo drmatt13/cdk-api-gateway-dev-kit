@@ -27,6 +27,8 @@ export class EcsStack extends cdk.Stack {
           cpu: 256,
           memoryLimitMiB: 512,
           desiredCount: 1,
+          publicLoadBalancer: true,
+          assignPublicIp: true,
           taskImageOptions: {
             image: ecs.ContainerImage.fromAsset(
               path.join(__dirname, "..", "ecs_containers", "test-container-1"),
@@ -39,7 +41,6 @@ export class EcsStack extends cdk.Stack {
               PORT: "5000",
             },
           },
-          publicLoadBalancer: true,
         },
       );
 
@@ -52,6 +53,8 @@ export class EcsStack extends cdk.Stack {
           cpu: 256,
           memoryLimitMiB: 512,
           desiredCount: 1,
+          publicLoadBalancer: true,
+          assignPublicIp: true,
           taskImageOptions: {
             image: ecs.ContainerImage.fromAsset(
               path.join(__dirname, "..", "ecs_containers", "test-container-2"),
@@ -64,7 +67,6 @@ export class EcsStack extends cdk.Stack {
               PORT: "5001",
             },
           },
-          publicLoadBalancer: true,
         },
       );
 
